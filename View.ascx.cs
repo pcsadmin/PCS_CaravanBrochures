@@ -21,6 +21,8 @@ using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
 using System.IO;
 using System.Web.UI;
+using Amazon;
+
 
 namespace Christoc.Modules.PCS_CaravanBrochures
 {
@@ -42,34 +44,17 @@ namespace Christoc.Modules.PCS_CaravanBrochures
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
-
             try
             {
-                //do stuff on page load
-                string BrandName = Request.QueryString["BrandName"];
-
-
-                //string templatePath = ControlPath + "Templates/_MainView.cshtml";
-                //var razorEngine = new DotNetNuke.Web.Razor.RazorEngine(templatePath, ModuleContext, LocalResourceFile);
-                //var writer = new StringWriter();
-                //razorEngine.Render(writer);
-                //BrochureView.Controls.Add(new LiteralControl(Server.HtmlDecode(writer.ToString())));
-
-
-
-                //string templatePath = ControlPath + "Templates/_BrochureDetails.cshtml";
-                //var razorEngine = new DotNetNuke.Web.Razor.RazorEngine(templatePath, ModuleContext, LocalResourceFile);
-                //var writer = new StringWriter();
-                //razorEngine.Render(writer);
-                //BrochureView.Controls.Add(new LiteralControl(Server.HtmlDecode(writer.ToString())));
 
             }
             catch (Exception exc) //Module failed to load
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
-
         }
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -82,11 +67,17 @@ namespace Christoc.Modules.PCS_CaravanBrochures
                 var writer = new StringWriter();
                 razorEngine.Render(writer);
                 BrochureView.Controls.Add(new LiteralControl(Server.HtmlDecode(writer.ToString())));
+
+
+ 
+
+            
+
             }
             catch (Exception exc) //Module failed to load
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
-                lblError.Text = exc.ToString();
+                
             }
         }
 
@@ -109,4 +100,5 @@ namespace Christoc.Modules.PCS_CaravanBrochures
             }
         }
     }
+
 }

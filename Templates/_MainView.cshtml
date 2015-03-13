@@ -1,10 +1,6 @@
 ﻿@{
     var queryString = Request.QueryString["BrandName"];
 
-  
-
-
-
 
     if (queryString == null)
     {
@@ -36,7 +32,34 @@
     }
     else
     {
-        <h2>Brochures for @queryString Caravans</h2>    
-    
+        <h2>Brochures for @queryString Caravans</h2>
+        string brochurePath = "/Portals/0/Brochures";
+        string fullBrochurePath = Server.MapPath(brochurePath);
+        DirectoryInfo di = new DirectoryInfo(fullBrochurePath);
+        FileSystemInfo[] files = di.GetFileSystemInfos();
+       
+      
+        string[] brochureDirs = Directory.GetFiles(fullBrochurePath, "*" + queryString + "*.pdf");
+        List<string> fileList = brochureDirs.ToList<string>();
+        
+        if (brochureDirs != null || brochureDirs.Length > 0)
+        {
+            foreach (string b in fileList.Reverse<string>())
+            {
+                <ul>
+                    @{FileInfo brochureFile = new FileInfo(b);
+                    string BrochureFilenameWExtension = Path.GetFileName(brochureFile.FullName).ToString();
+                    string[] brochureFileName = BrochureFilenameWExtension.Split('.');
+                    string brochureIMG = brochureFileName[0]+".jpg";
+                    string brochurePDF = brochureFileName[0] + ".pdf";
+                    }
+                    <li>
+                        <a href="@brochurePath/@brochurePDF"><img src="@brochurePath/@brochureIMG" /></a>
+                    </li>
+                </ul>
+            }
+
+        }
+
     }
 }
