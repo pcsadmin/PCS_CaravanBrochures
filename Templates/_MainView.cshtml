@@ -1,0 +1,42 @@
+﻿@{
+    var queryString = Request.QueryString["BrandName"];
+
+  
+
+
+
+
+    if (queryString == null)
+    {
+        string relativePath = "/Portals/0/Graphics/Brands";
+        string path = Server.MapPath(relativePath);
+        string[] dirs = Directory.GetFiles(path);
+
+        string queryStr = Request.QueryString["BrandName"];
+        //if (queryStr != "")
+        //{  Response.Write(queryStr.ToString());}
+
+
+        if (dirs != null || dirs.Length > 0)
+        {
+
+            foreach (string dir in dirs)
+            {
+
+
+                FileInfo file = new FileInfo(dir);
+                string filename = Path.GetFileName(file.FullName).ToString();
+                string[] brandname = filename.Split('.');
+                <a href="/Brochures?BrandName=@brandname[0]">
+                    <img src="@relativePath/@filename" style="width:150px;">
+                </a>
+            }
+
+        }
+    }
+    else
+    {
+        <h2>Brochures for @queryString Caravans</h2>    
+    
+    }
+}
